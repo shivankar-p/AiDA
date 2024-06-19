@@ -1,7 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 final secureUri = dotenv.env['URI'];
-String uri = 'https://12ce-119-161-98-68.ngrok-free.app';
+String uri = 'https://a546-103-156-19-229.ngrok-free.app';
 
 String signUpUrl = '$uri/api/signup';
 String signInUrl = '$uri/api/signin';
@@ -41,6 +41,8 @@ String getUserDataUri = '$uri/';
 
 String orderUri = '$uri/api/order';
 String placeOrderBuyNowUri = '$uri/api/place-order-buy-now';
+
+String addimgtoProductUri = '$uri/api/add-product-image';
 
 //admin
 String adminGetCategoryProductsUri = '$uri/admin/get-category-product';

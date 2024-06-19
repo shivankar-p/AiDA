@@ -21,21 +21,44 @@ import 'package:flutter_amazon_clone_bloc/src/presentation/widgets/product_detai
 import 'package:flutter_amazon_clone_bloc/src/presentation/widgets/product_details/product_features.dart';
 import 'package:flutter_amazon_clone_bloc/src/presentation/widgets/product_details/product_quality_icons.dart';
 import 'package:flutter_amazon_clone_bloc/src/presentation/widgets/product_details/you_might_also_like.dart';
+import 'package:flutter_amazon_clone_bloc/src/utils/constants/strings.dart';
 import 'package:flutter_amazon_clone_bloc/src/utils/constants/constants.dart';
 import 'package:flutter_amazon_clone_bloc/src/utils/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:go_router/go_router.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:http/http.dart' as http;
+import 'dart:io';
+import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 
-class ProductDetailsScreen extends StatelessWidget {
+class ProductDetailsScreen extends StatefulWidget {
   final Product product;
   final String deliveryDate;
 
   const ProductDetailsScreen({
-    super.key,
+    Key? key,
     required this.product,
     required this.deliveryDate,
-  });
+  }) : super(key: key);
+
+  @override
+  _ProductDetailsScreenState createState() => _ProductDetailsScreenState();
+}
+
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  late Product product;
+  late String deliveryDate;
+  late CarouselController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    product = widget.product;
+    deliveryDate = widget.deliveryDate;
+    controller = CarouselController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +69,6 @@ class ProductDetailsScreen extends StatelessWidget {
     BlocProvider.of<WishListCubit>(context).wishList(product: product);
     BlocProvider.of<KeepShoppingForCubit>(context)
         .addToKeepShoppingFor(product: product);
-    final CarouselController controller = CarouselController();
 
     return Scaffold(
       appBar: const PreferredSize(
@@ -67,6 +89,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       builder: (context, state) {
                         if (state is CarouselImageChangeState) {
                           return CarouselWidget(
+                              // key: ValueKey(product.images.length),
                               product: product,
                               controller: controller,
                               currentIndex: state.index);
@@ -131,26 +154,49 @@ class ProductDetailsScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Positioned(
-                      bottom: 30,
-                      left: 30,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ScreenshotWidget()));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          backgroundColor: Colors.orange,
-                        ),
-                        child: Icon(
-                          Icons.view_in_ar, // Custom AR icon
-                          color: Colors.white, // Icon color
+                    if (product.category == 'Furniture')
+                      Positioned(
+                        bottom: 30,
+                        left: 30,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ScreenshotWidget()));
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: CircleBorder(),
+                            backgroundColor: Colors.orange,
+                          ),
+                          child: Icon(
+                            Icons.view_in_ar, // Custom AR icon
+                            color: Colors.white, // Icon color
+                          ),
                         ),
                       ),
-                    ),
+                    if (product.category == 'Fashion')
+                      Positioned(
+                        bottom: 30,
+                        left: 30,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            await openFilePicker(product);
+                            var imgs = product.images;
+                            context.read<CarouselImageBloc>().add(
+                                CarouselImageChangedEvent(
+                                    index: imgs.length - 1));
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: CircleBorder(),
+                            backgroundColor: Colors.orange,
+                          ),
+                          child: Icon(
+                            Icons.checkroom, // Custom AR icon
+                            color: Colors.white, // Icon color
+                          ),
+                        ),
+                      ),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -596,5 +642,89 @@ class WishListIcon extends StatelessWidget {
         //     ),
         //   ),
         );
+  }
+}
+
+Future<void> openFilePicker(Product product) async {
+  try {
+    print(product.id);
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      String? filePath = result.files.single.path;
+      if (filePath != null) {
+        File file = File(filePath);
+        List<int> fileBytes = await file.readAsBytes();
+        String fileName = file.path.split('/').last;
+
+        var request = http.MultipartRequest(
+          'POST',
+          Uri.parse('http://172.16.202.52:8888/tryon'),
+        );
+
+        request.files.add(http.MultipartFile.fromBytes(
+          'file',
+          fileBytes,
+          filename: fileName,
+        ));
+
+        request.fields['cloth_path'] = product.id!;
+        print("Sent request to Tryon API");
+        http.StreamedResponse response = await request.send();
+
+        if (response.statusCode == 200) {
+          print('Tryon returned successfully');
+
+          var responseBody = await response.stream.bytesToString();
+          var responseData = jsonDecode(responseBody);
+
+          // Call the product image API
+          await addImagetoDB(product, responseData['generated_image']);
+        } else {
+          print('Error uploading file: ${response}');
+        }
+      }
+    } else {
+      print("User didn't pick a file.");
+    }
+  } catch (e) {
+    print('Error picking/sending file: $e');
+  }
+}
+
+// Function to call the product image API
+Future<void> addImagetoDB(Product product, String? imageUrl) async {
+  print(product.id);
+  print(imageUrl);
+  // print(Uri.parse(addimgtoProductUri + '/' + productId));
+  // print(addimgtoProductUri + '/' + productId);
+
+  try {
+    final client = http.Client();
+    String token = await getToken();
+    var response = await client.post(
+      Uri.parse(addimgtoProductUri), // Add the product image API endpoint here
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'x-auth-token': token,
+      },
+      body: jsonEncode({'id': product.id, 'image': imageUrl}),
+    );
+
+    if (response.statusCode == 200) {
+      print('Product image added successfully');
+      product.images.add(imageUrl!);
+      Fluttertoast.showToast(
+        msg: 'Tryon Generated Successfully!',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity:
+            ToastGravity.BOTTOM, // Position the toast at the top of the screen
+        backgroundColor: Colors.grey,
+        textColor: Colors.white,
+      );
+    } else {
+      print('Error adding product image: ${response.body}');
+    }
+  } catch (e) {
+    print('Error calling product image API: $e');
   }
 }

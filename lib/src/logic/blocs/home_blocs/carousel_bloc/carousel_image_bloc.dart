@@ -10,6 +10,10 @@ class CarouselImageBloc extends Bloc<CarouselImageEvent, CarouselImageState> {
       emit(CarouselImageChangeState(index: event.index));
     });
 
+    on<CarouselImageIncrementEvent>((event, emit) {
+      emit(CarouselImageChangeState(index: event.index + 1));
+    });
+
     on<ResetCarouselEvent>(
       (event, emit) {
         emit(ResetCarouselState());

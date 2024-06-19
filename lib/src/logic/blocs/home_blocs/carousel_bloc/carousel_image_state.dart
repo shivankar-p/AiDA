@@ -14,3 +14,5 @@ final class CarouselImageChangeState extends CarouselImageState {
 }
 
 final class ResetCarouselState extends CarouselImageState {}
+
+final class IncrementCarouselIndexEvent extends CarouselImageEvent {}

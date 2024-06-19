@@ -13,4 +13,12 @@ final class CarouselImageChangedEvent extends CarouselImageEvent {
   List<Object?> get props => [index];
 }
 
+final class CarouselImageIncrementEvent extends CarouselImageEvent {
+  final int index;
+
+  CarouselImageIncrementEvent({required this.index});
+  @override
+  List<Object?> get props => [index];
+}
+
 final class ResetCarouselEvent extends CarouselImageEvent {}

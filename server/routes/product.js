@@ -8,9 +8,6 @@ productRouter.get('/api/products', auth ,async (req, res)=>{
     try {
 
         const products = await Product.find({category : req.query.category});
-
-        console.log(req.query.category);
-        console.log(products);
         res.json(products);
     } catch (error) {
         res.status(500).json({error : e.message});
@@ -152,6 +149,27 @@ productRouter.get("/api/deal-of-the-day", auth, async (req, res) => {
     }
 })
 
+productRouter.post("/api/add-product-image", auth, async (req, res) => {
+    console.log('add product image');
+    try {
+        const { id, image } = req.body;
+        console.log(id, image);
+        let product = await Product.findById(id);
+        console.log(product);
+        if (!product) {
+            return res.status(404).json({ error: "Product not found" });
+        }
+
+        product.images.push(image);
+        product = await product.save();
+
+        console.log('saved');
+
+        res.json(product);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 
 
