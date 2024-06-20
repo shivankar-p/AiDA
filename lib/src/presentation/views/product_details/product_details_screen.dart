@@ -32,6 +32,7 @@ import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_amazon_clone_bloc/src/presentation/views/product_carousel/products.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final Product product;
@@ -181,11 +182,19 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         left: 30,
                         child: ElevatedButton(
                           onPressed: () async {
-                            await openFilePicker(product);
-                            var imgs = product.images;
-                            context.read<CarouselImageBloc>().add(
-                                CarouselImageChangedEvent(
-                                    index: imgs.length - 1));
+                            // await openFilePicker(product);
+                            // var imgs = product.images;
+                            // context.read<CarouselImageBloc>().add(
+                            //     CarouselImageChangedEvent(
+                            //         index: imgs.length - 1));
+                            // context.pushNamed(
+                            //   AppRouteConstants.productCarouselScreenRoute.name,
+                            // );
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ProductCarouselScreen()));
                           },
                           style: ElevatedButton.styleFrom(
                             shape: CircleBorder(),

@@ -44,6 +44,9 @@ class AppRouteConstants {
   static const productDetailsScreenRoute =
       AppRoute(name: 'product-details-screen', path: '/product-details-screen');
 
+  static const productCarouselScreenRoute = AppRoute(
+      name: 'product-carousel-screen', path: '/product-carousel-screen');
+
   static const cartScreenScreenRoute =
       AppRoute(name: 'cart-screen', path: '/cart-screen');
 

@@ -55,6 +55,7 @@ dependencies:
   rename: ^3.0.1
   shared_preferences: ^2.2.2
   syncfusion_flutter_charts: ^26.1.35
+  video_player: ^2.8.7
   win32: ^5.5.1
 
 dev_dependencies:

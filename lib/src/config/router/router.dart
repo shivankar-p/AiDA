@@ -35,6 +35,7 @@ import 'package:flutter_amazon_clone_bloc/src/presentation/views/payment/payment
 import 'package:flutter_amazon_clone_bloc/src/presentation/views/product_details/product_details_screen.dart';
 import 'package:flutter_amazon_clone_bloc/src/presentation/views/search/search_screen.dart';
 import 'package:flutter_amazon_clone_bloc/src/presentation/views/splash_screen/splash_screen.dart';
+import 'package:flutter_amazon_clone_bloc/src/presentation/views/product_carousel/products.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -108,6 +109,13 @@ final router = GoRouter(initialLocation: '/', routes: [
           deliveryDate: deliveryDate,
         ),
       ));
+    },
+  ),
+  GoRoute(
+    name: AppRouteConstants.productCarouselScreenRoute.name,
+    path: AppRouteConstants.productCarouselScreenRoute.path,
+    pageBuilder: (context, state) {
+      return MaterialPage(child: ProductCarouselScreen());
     },
   ),
   GoRoute(
