@@ -1,7 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 final secureUri = dotenv.env['URI'];
-String uri = 'https://a546-103-156-19-229.ngrok-free.app';
+String uri = 'https://19fc-103-156-19-229.ngrok-free.app';
 
 String signUpUrl = '$uri/api/signup';
 String signInUrl = '$uri/api/signin';

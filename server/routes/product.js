@@ -14,6 +14,22 @@ productRouter.get('/api/products', auth ,async (req, res)=>{
     }
 })
 
+productRouter.post('/api/get-product-by-ids', auth, async (req, res) => {
+    console.log('inside api');
+    try {
+        // Extract the list of IDs from the query parameters
+        const {ids} = req.body;
+        console.log(ids);
+        // Fetch products that match any of the IDs in the list
+        const products = await Product.find({ id: { $in: ids } });
+
+        // Send the products as a response
+        res.json(products);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+})
+
 productRouter.get('/api/products/search/:name', auth ,async (req, res) => {
     try {
         const products = await Product.find({

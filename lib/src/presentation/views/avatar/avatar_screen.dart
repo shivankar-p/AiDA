@@ -129,9 +129,16 @@ class _AvatarScreenState extends State<AvatarScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             _controller = VideoPlayerController.networkUrl(
-                                Uri.parse(widget.url));
+                                Uri.parse(fillerUrl))
+                              ..initialize().then((_) {
+                                setState(() {
+                                  _controller.play();
+                                });
+                              });
+                            _showConfirmationButtons = false;
+                            await Future.delayed(Duration(seconds: 1));
                             _controller.play();
                             Navigator.of(context).pop(_text);
                           },

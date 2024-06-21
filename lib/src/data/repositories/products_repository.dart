@@ -33,6 +33,32 @@ class ProductsRepository {
     }
   }
 
+  Future<List<Product>> searchProductsbyIds(List<String> ids) async {
+    List<Product> productList = [];
+
+    try {
+      http.Response res = await productsApi.searchProductsbyIds(ids);
+
+      if (res.statusCode == 200) {
+        for (int i = 0; i < jsonDecode(res.body).length; i++) {
+          productList.add(
+            Product.fromJson(
+              jsonEncode(
+                jsonDecode(res.body)[i],
+              ),
+            ),
+          );
+        }
+
+        return productList;
+      } else {
+        throw Exception(jsonDecode(res.body)['msg']);
+      }
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
   Future<int> getAverageRatingLength({required String productId}) async {
     try {
       http.Response res =

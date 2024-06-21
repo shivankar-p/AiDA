@@ -30,6 +30,10 @@ const productSchema = mongoose.Schema({
         type: String,
         required : true,
     },
+    id: {
+        type: String,
+        required : true,
+    },
 
     ratings : [ratingSchema],
     
