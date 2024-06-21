@@ -1,0 +1,6 @@
+__pycache__
+
+RAGPipeline/*.gguf
+RAGPipeline/vector_db
+Models
+
