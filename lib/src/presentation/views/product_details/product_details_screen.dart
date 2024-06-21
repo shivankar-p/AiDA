@@ -33,6 +33,7 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_amazon_clone_bloc/src/presentation/views/product_carousel/products.dart';
+import 'package:flutter_amazon_clone_bloc/src/presentation/views/avatar/avatar_screen.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final Product product;
@@ -195,6 +196,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         ProductCarouselScreen()));
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) =>
+                            //             (AvatarScreen())));
                           },
                           style: ElevatedButton.styleFrom(
                             shape: CircleBorder(),
