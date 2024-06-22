@@ -1,0 +1,11 @@
+DATA
+*.ckpt
+ckpts/*
+*__pycache__/*
+.vscode/
+*.pyc
+
+*.ipynb_checkpoints/*
+*.png
+*.jpg
+*.jpeg
