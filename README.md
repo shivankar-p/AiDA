@@ -6,7 +6,7 @@ A realistic virtual assistant that mimics a seasoned sales executive, interactin
 
 ## Demo
 
-The application demo can be found in the link [here](https://drive.google.com/drive/folders/1xRIUcLRfiWLs1h7BuCB4ogYSaAvG9y2i?usp=sharing). The accompanying slide deck can be found at [here](https://github.com/shivankar-p/AiDA/blob/master/AiDA%20Presentation.pdf).
+The application demo can be found in the link [here](https://drive.google.com/drive/folders/1xRIUcLRfiWLs1h7BuCB4ogYSaAvG9y2i?usp=sharing)
 
 ## Key Features
 
@@ -14,9 +14,17 @@ The application demo can be found in the link [here](https://drive.google.com/dr
 
 A life-like shopping assistant using realistic avatars generated using RAD-NeRF with audio driven by user voice queries.
 
+<img src="images/AiDA1.png" alt="AiDA" height=600 > <img src="images/AiDA2.png" alt="AiDA" height=600 >
+
+
+
 ##### Virtual TryOns powered by AR and GenAI
 
 Using AR and GenAI, we enhance Amazon Prime's "Try Before You Buy" with virtual try-ons, giving customers a realistic view of items. We use the State-of-the-art Diffusions Models and ARKit for providing potential customers to try on/out products before they buy increasing customer engagement and reduce drop off rates.
+
+<img src="images/TryOn.png" alt="Tryon 1" height=600 >      <img src="images/TryOn2.png" alt="Tryon 2" height=600 >
+
+<img src="images/AR.png" alt="AR Tryon for furniture" width=600>
 
 ##### Personalized Recommendations
 
