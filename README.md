@@ -24,7 +24,7 @@ Using AR and GenAI, we enhance Amazon Prime's "Try Before You Buy" with virtual 
 
 <img src="images/TryOn.png" alt="Tryon 1" height=600 >      <img src="images/TryOn2.png" alt="Tryon 2" height=600 >
 
-<img src="images/AR.png" alt="AR Tryon for furniture" width=600>
+ <img src="images/AR-1.png" alt="Furniture" height=600>  <img src="images/AR.png" alt="AR Tryon for furniture" width=600>
 
 ##### Personalized Recommendations
 
