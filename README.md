@@ -1,6 +1,6 @@
-## RAD-NeRF
+## Avatar Generation Pipeline
 
-The flask api for our service is based on the paper - RAD-NeRF: Real-time Neural Talking Portrait Synthesis. For installing all required dependencies please follow instructions mentioned [here](https://github.com/ashawkey/RAD-NeRF/blob/main/readme.md). To understand how RAD-NeRF works we would highly suggest you to check the paper from the link [here](https://arxiv.org/abs/2211.12368).
+The flask api for our service is based on the paper - RAD-NeRF: Real-time Neural Talking Portrait Synthesis. For installing all required dependencies please follow the instructions mentioned [here](https://github.com/ashawkey/RAD-NeRF/blob/main/readme.md). To understand how RAD-NeRF works we highly suggest you check the paper from the link [here](https://arxiv.org/abs/2211.12368).
 
 ## Usage
 
