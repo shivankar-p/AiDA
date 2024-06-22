@@ -6,7 +6,7 @@ A realistic virtual assistant that mimics a seasoned sales executive, interactin
 
 ## Demo
 
-The application demo can be found in the link [here](https://drive.google.com/drive/folders/1xRIUcLRfiWLs1h7BuCB4ogYSaAvG9y2i?usp=sharing)
+The application demo can be found in the link [here](https://drive.google.com/drive/folders/1xRIUcLRfiWLs1h7BuCB4ogYSaAvG9y2i?usp=sharing). The accompanying slide deck can be found at [here](https://github.com/shivankar-p/AiDA/blob/master/AiDA%20Presentation.pdf).
 
 ## Key Features
 
